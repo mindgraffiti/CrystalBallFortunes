@@ -13,7 +13,8 @@
 @end
 
 NSArray *fortunesArray;
-int tries = 0;
+int tries;
+NSUserDefaults *prefs;
 
 @implementation MainViewController
 
@@ -33,15 +34,22 @@ int tries = 0;
 
     // set up the array
     fortunesArray = [[NSArray alloc]initWithObjects: @"It is certain",  @"It is decidedly so", @"Without a doubt", @"Yes – definitely",@"You may rely on it",@"As I see it, yes",@"Most likely", @"Outlook good",@"Yes",@"Signs point to yes",@"Reply hazy, try again",@"Ask again later",@"Better not tell you now",@"Cannot predict now",@"Concentrate and ask again",@"Don't count on it",@"My reply is no",@"My sources say no",@"Outlook not so good", @"Very doubtful", nil];
+    tries = 0;
+    prefs = [NSUserDefaults standardUserDefaults];
 
 }
 - (void)upgradeIt
 {
-    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops!"
+                                                    message:@"Out of freebies. Purchase upgrade."
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil,nil];
+    [alert show];
 }
 - (void)runFortune
 {
-    if(tries <=3)
+    if(tries <3)
     {
         // count the number of times the user has tried this app
         tries ++;
@@ -57,7 +65,8 @@ int tries = 0;
     }
     else
     {
-        // [self upgradeIt]
+        [prefs setBool:TRUE forKey:@"freeloader"];
+        [self upgradeIt];
     }
 }
 
