@@ -14,7 +14,6 @@
 
 NSArray *fortunesArray;
 int tries;
-NSUserDefaults *prefs;
 
 @implementation MainViewController
 
@@ -35,7 +34,16 @@ NSUserDefaults *prefs;
     // set up the array
     fortunesArray = [[NSArray alloc]initWithObjects: @"It is certain",  @"It is decidedly so", @"Without a doubt", @"Yes – definitely",@"You may rely on it",@"As I see it, yes",@"Most likely", @"Outlook good",@"Yes",@"Signs point to yes",@"Reply hazy, try again",@"Ask again later",@"Better not tell you now",@"Cannot predict now",@"Concentrate and ask again",@"Don't count on it",@"My reply is no",@"My sources say no",@"Outlook not so good", @"Very doubtful", nil];
     tries = 0;
-    prefs = [NSUserDefaults standardUserDefaults];
+    
+    
+    // check to see if user is over freebie limits
+    BOOL overage = [[NSUserDefaults standardUserDefaults]boolForKey:@"freeloader"];
+    if(overage)
+    {
+        // warn user they are out of freebies.
+        [self upgradeIt];
+        fortuneBtn.hidden = YES;
+    }
 
 }
 - (void)upgradeIt
@@ -65,15 +73,11 @@ NSUserDefaults *prefs;
     }
     else
     {
-        [prefs setBool:TRUE forKey:@"freeloader"];
+        [[NSUserDefaults standardUserDefaults] setBool:TRUE forKey:@"freeloader"];
         [self upgradeIt];
     }
 }
 
-- (IBAction)fortuneText:(id)sender
-{
-    
-}
 - (IBAction)fortuneBtn:(id)sender
 {
     [self runFortune];

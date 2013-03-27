@@ -10,5 +10,5 @@
 
 @interface MainViewController : UIViewController
 @property (strong, nonatomic) IBOutlet UILabel *fortuneText;
-- (IBAction)fortuneBtn:(id)sender;
+@property (strong, nonatomic) IBOutlet UIButton *fortuneBtn;
 @end
