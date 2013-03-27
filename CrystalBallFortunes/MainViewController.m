@@ -42,7 +42,7 @@ int tries;
     {
         // warn user they are out of freebies.
         [self upgradeIt];
-        fortuneBtn.hidden = YES;
+        self.fortuneBtn.hidden = YES;
     }
 
 }
